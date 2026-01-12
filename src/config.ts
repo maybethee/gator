@@ -8,7 +8,6 @@ export type Config = {
 };
 
 export function setUser(name: string) {
-  //
   const config = {
     dbUrl: "postgres://example",
     currentUserName: name,
