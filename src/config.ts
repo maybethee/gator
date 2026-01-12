@@ -8,13 +8,14 @@ export type Config = {
 };
 
 export function setUser(name: string) {
-  const config = {
-    dbUrl: "postgres://example",
-    currentUserName: name,
-  };
+  console.log("reading config:");
+  const config = readConfig();
+  config.currentUserName = name;
   writeConfig(config);
 
-  return config;
+  console.log("updated config:");
+  const updatedConfig = readConfig();
+  return updatedConfig;
 }
 
 export function readConfig(): Config {
