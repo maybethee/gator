@@ -1,6 +1,11 @@
-import { setUser } from "../config.js";
+import { setUser, readConfig } from "../config.js";
 import { exit } from "node:process";
-import { createUser, getUser, resetUsers } from "../lib/db/queries/users.js";
+import {
+  createUser,
+  getUser,
+  getUsers,
+  resetUsers,
+} from "../lib/db/queries/users.js";
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length === 0) {
@@ -48,5 +53,19 @@ export async function handlerReset() {
   } catch (err) {
     console.error("reset failed:", err);
     throw err;
+  }
+}
+
+export async function handlerUsers() {
+  const config = readConfig();
+
+  const users = await getUsers();
+
+  for (const user of users) {
+    if (config.currentUserName === user.name) {
+      console.log(`* ${user.name} (current)`);
+    } else {
+      console.log(`* ${user.name}`);
+    }
   }
 }

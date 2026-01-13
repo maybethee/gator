@@ -3,6 +3,7 @@ import {
   handlerLogin,
   handlerRegister,
   handlerReset,
+  handlerUsers,
 } from "./commands/users.js";
 
 type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
@@ -36,6 +37,7 @@ async function main() {
   registerCommand(registry, "login", handlerLogin);
   registerCommand(registry, "register", handlerRegister);
   registerCommand(registry, "reset", handlerReset);
+  registerCommand(registry, "users", handlerUsers);
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }
