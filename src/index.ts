@@ -1,16 +1,12 @@
-import { setUser } from "./config.js";
 import { argv, exit } from "node:process";
+import {
+  handlerLogin,
+  handlerRegister,
+  handlerReset,
+} from "./commands/users.js";
 
-type CommandHandler = (cmdName: string, ...args: string[]) => void;
+type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 type CommandsRegistry = Record<string, CommandHandler>;
-
-function handlerLogin(cmdName: string, ...args: string[]) {
-  if (args.length === 0) {
-    throw new Error("login handler expects username argument");
-  }
-  const user = setUser(args[0]);
-  console.log(`current user name set to ${user.currentUserName}`);
-}
 
 function registerCommand(
   registry: CommandsRegistry,
@@ -20,25 +16,28 @@ function registerCommand(
   registry[cmdName] = handler;
 }
 
-function runCommand(
+async function runCommand(
   registry: CommandsRegistry,
   cmdName: string,
   ...args: string[]
 ) {
   if (registry[cmdName]) {
-    registry[cmdName](cmdName, ...args);
+    return await registry[cmdName](cmdName, ...args);
   }
 }
 
-function main() {
+async function main() {
   const registry: CommandsRegistry = {};
   const passedArgs = argv.slice(2);
   if (passedArgs.length === 0) {
     console.error("missing at least one additional argument");
     exit(1);
   }
-  registerCommand(registry, passedArgs[0], handlerLogin);
-  runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
+  registerCommand(registry, "login", handlerLogin);
+  registerCommand(registry, "register", handlerRegister);
+  registerCommand(registry, "reset", handlerReset);
+  await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
+  process.exit(0);
 }
 
 main();
