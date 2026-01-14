@@ -5,7 +5,6 @@ import {
   getUser,
   getUsers,
   resetUsers,
-  type User,
 } from "../lib/db/queries/users.js";
 import { createFeed, type Feed } from "src/lib/db/queries/feeds.js";
 
@@ -69,44 +68,5 @@ export async function handlerUsers() {
     } else {
       console.log(`* ${user.name}`);
     }
-  }
-}
-
-export async function handlerAddFeed(
-  cmdName: string,
-  name: string,
-  url: string,
-) {
-  const config = readConfig();
-  const userName = config.currentUserName;
-  const user = await getUser(userName);
-  if (!user) {
-    console.error(
-      `${userName} does not exist in database. Try "npm run start register ${userName}" to register user to the database`,
-    );
-    exit(1);
-  }
-
-  try {
-    const feed = await createFeed(name, url, user.id);
-
-    console.log("New Feed created:");
-    printFeed(user, feed);
-  } catch (err) {
-    console.error("add feed failed:", err);
-    throw err;
-  }
-}
-
-function printFeed(user: User, feed: Feed) {
-  console.log("User:");
-  for (const [key, val] of Object.entries(user)) {
-    console.log(`- ${key}: ${val}`);
-  }
-
-  console.log();
-  console.log("Feed:");
-  for (const [key, val] of Object.entries(feed)) {
-    console.log(`- ${key}: ${val}`);
   }
 }

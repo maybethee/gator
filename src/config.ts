@@ -35,6 +35,7 @@ function writeConfig(cfg: Config) {
   fs.writeFileSync(filePath, stringifiedConfig);
 }
 
+// @ts-ignore
 function validateConfig(rawConfig): Config {
   return {
     dbUrl: rawConfig.dbUrl,
