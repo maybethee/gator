@@ -1,5 +1,6 @@
 import { argv, exit } from "node:process";
 import {
+  handlerAddFeed,
   handlerLogin,
   handlerRegister,
   handlerReset,
@@ -40,6 +41,7 @@ async function main() {
   registerCommand(registry, "reset", handlerReset);
   registerCommand(registry, "users", handlerUsers);
   registerCommand(registry, "agg", handlerAgg);
+  registerCommand(registry, "addfeed", handlerAddFeed);
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }
