@@ -6,7 +6,7 @@ import {
   handlerReset,
   handlerUsers,
 } from "./commands/users.js";
-import { handlerAgg } from "./commands/rss.js";
+import { handlerAgg, handlerFeeds } from "./commands/rss.js";
 
 type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 type CommandsRegistry = Record<string, CommandHandler>;
@@ -42,6 +42,7 @@ async function main() {
   registerCommand(registry, "users", handlerUsers);
   registerCommand(registry, "agg", handlerAgg);
   registerCommand(registry, "addfeed", handlerAddFeed);
+  registerCommand(registry, "feeds", handlerFeeds);
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }

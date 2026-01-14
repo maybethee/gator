@@ -1,5 +1,6 @@
 import { XMLParser } from "fast-xml-parser";
 import { exit } from "node:process";
+import { feedsOnUsers, type Feed } from "src/lib/db/queries/feeds";
 
 type RSSFeed = {
   channel: {
@@ -94,4 +95,14 @@ function filterItems(itemArr: RSSItem[]): RSSItem[] {
   }
 
   return itemArr;
+}
+
+export async function handlerFeeds() {
+  const allFeeds = await feedsOnUsers();
+
+  for (const feeds of allFeeds) {
+    console.log(`Name: ${feeds.feeds.name}`);
+    console.log(`url: ${feeds.feeds.url}`);
+    console.log(`User: ${feeds.users.name}`);
+  }
 }

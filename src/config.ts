@@ -36,7 +36,6 @@ function writeConfig(cfg: Config) {
 }
 
 function validateConfig(rawConfig): Config {
-  console.log(rawConfig);
   return {
     dbUrl: rawConfig.dbUrl,
     currentUserName: rawConfig.currentUserName,
