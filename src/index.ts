@@ -5,7 +5,12 @@ import {
   handlerReset,
   handlerUsers,
 } from "./commands/users.js";
-import { handlerListFeeds, handlerAddFeed } from "./commands/feeds.js";
+import {
+  handlerListFeeds,
+  handlerAddFeed,
+  handlerFollow,
+  handlerFollowing,
+} from "./commands/feeds.js";
 import { handlerAgg } from "./commands/rss.js";
 
 type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
@@ -43,6 +48,8 @@ async function main() {
   registerCommand(registry, "agg", handlerAgg);
   registerCommand(registry, "addfeed", handlerAddFeed);
   registerCommand(registry, "feeds", handlerListFeeds);
+  registerCommand(registry, "follow", handlerFollow);
+  registerCommand(registry, "following", handlerFollowing);
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }

@@ -8,12 +8,12 @@ export type Config = {
 };
 
 export function setUser(name: string) {
-  console.log("reading config:");
+  // console.log("reading config:");
   const config = readConfig();
   config.currentUserName = name;
   writeConfig(config);
 
-  console.log("updated config:");
+  // console.log("updated config:");
   const updatedConfig = readConfig();
   return updatedConfig;
 }
