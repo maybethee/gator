@@ -8,6 +8,7 @@ import {
 } from "src/lib/db/queries/feeds.js";
 import {
   createFeedFollow,
+  deleteFeedFollow,
   getFeedFollowsForUser,
 } from "src/lib/db/queries/feed_follows.js";
 
@@ -82,7 +83,7 @@ export async function handlerFollow(
       `User '${newRecord.userName}' followed feed: ${newRecord.feedName}`,
     );
   } catch (err) {
-    console.error("get follow list failed:", err);
+    console.error("follow failed", err);
     throw err;
   }
 }
@@ -96,6 +97,29 @@ export async function handlerFollowing(cmdName: string, user: User) {
     }
   } catch (err) {
     console.error("get follow list failed:", err);
+    throw err;
+  }
+}
+
+export async function handlerUnfollow(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
+  if (args.length === 0) {
+    console.error("follow handler expects url argument");
+    exit(1);
+  }
+
+  const url = args[0];
+
+  try {
+    const deletedFeed = await deleteFeedFollow(user.id, url);
+    console.log(
+      `User ID-${deletedFeed.userId} unfollowed feed ID-${deletedFeed.feedId}`,
+    );
+  } catch (err) {
+    console.error("unfollow failed", err);
     throw err;
   }
 }

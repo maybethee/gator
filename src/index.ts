@@ -10,11 +10,10 @@ import {
   handlerAddFeed,
   handlerFollow,
   handlerFollowing,
+  handlerUnfollow,
 } from "./commands/feeds.js";
 import { handlerAgg } from "./commands/rss.js";
 import { middlewareLoggedIn } from "./middleware.js";
-// import { getUser, User } from "./lib/db/queries/users.js";
-// import { readConfig } from "./config.js";
 
 export type CommandHandler = (
   cmdName: string,
@@ -56,6 +55,7 @@ async function main() {
   registerCommand(registry, "feeds", handlerListFeeds);
   registerCommand(registry, "follow", middlewareLoggedIn(handlerFollow));
   registerCommand(registry, "following", middlewareLoggedIn(handlerFollowing));
+  registerCommand(registry, "unfollow", middlewareLoggedIn(handlerUnfollow));
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }
