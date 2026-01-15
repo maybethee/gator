@@ -1,6 +1,5 @@
-import { readConfig } from "../config.js";
 import { exit } from "node:process";
-import { getUser, getUserById, type User } from "../lib/db/queries/users.js";
+import { getUserById, type User } from "../lib/db/queries/users.js";
 import {
   createFeed,
   getFeeds,
@@ -14,19 +13,10 @@ import {
 
 export async function handlerAddFeed(
   cmdName: string,
+  user: User,
   name: string,
   url: string,
 ) {
-  const config = readConfig();
-  const userName = config.currentUserName;
-  const user = await getUser(userName);
-  if (!user) {
-    console.error(
-      `${userName} does not exist in database. Try "npm run start register ${userName}" to register user to the database`,
-    );
-    exit(1);
-  }
-
   try {
     const feed = await createFeed(name, url, user.id);
 
@@ -73,24 +63,18 @@ export async function handlerListFeeds() {
   }
 }
 
-export async function handlerFollow(cmdName: string, ...args: string[]) {
+export async function handlerFollow(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
   if (args.length === 0) {
     console.error("follow handler expects url argument");
     exit(1);
   }
 
   const url = args[0];
-
-  const config = readConfig();
-  const userName = config.currentUserName;
-  const user = await getUser(userName);
   const feed = await getFeedByUrl(url);
-  if (!user) {
-    console.error(
-      `${userName} does not exist in database. Try "npm run start register ${userName}" to register user to the database`,
-    );
-    exit(1);
-  }
 
   try {
     const newRecord = await createFeedFollow(user.id, feed.id);
@@ -103,17 +87,7 @@ export async function handlerFollow(cmdName: string, ...args: string[]) {
   }
 }
 
-export async function handlerFollowing() {
-  const config = readConfig();
-  const userName = config.currentUserName;
-  const user = await getUser(userName);
-  if (!user) {
-    console.error(
-      `${userName} does not exist in database. Try "npm run start register ${userName}" to register user to the database`,
-    );
-    exit(1);
-  }
-
+export async function handlerFollowing(cmdName: string, user: User) {
   try {
     const follows = await getFeedFollowsForUser(user.id);
     console.log(`Feeds followed by ${user.name}`);

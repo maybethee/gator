@@ -12,9 +12,15 @@ import {
   handlerFollowing,
 } from "./commands/feeds.js";
 import { handlerAgg } from "./commands/rss.js";
+import { middlewareLoggedIn } from "./middleware.js";
+// import { getUser, User } from "./lib/db/queries/users.js";
+// import { readConfig } from "./config.js";
 
-type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
-type CommandsRegistry = Record<string, CommandHandler>;
+export type CommandHandler = (
+  cmdName: string,
+  ...args: string[]
+) => Promise<void>;
+export type CommandsRegistry = Record<string, CommandHandler>;
 
 function registerCommand(
   registry: CommandsRegistry,
@@ -46,10 +52,10 @@ async function main() {
   registerCommand(registry, "reset", handlerReset);
   registerCommand(registry, "users", handlerUsers);
   registerCommand(registry, "agg", handlerAgg);
-  registerCommand(registry, "addfeed", handlerAddFeed);
+  registerCommand(registry, "addfeed", middlewareLoggedIn(handlerAddFeed));
   registerCommand(registry, "feeds", handlerListFeeds);
-  registerCommand(registry, "follow", handlerFollow);
-  registerCommand(registry, "following", handlerFollowing);
+  registerCommand(registry, "follow", middlewareLoggedIn(handlerFollow));
+  registerCommand(registry, "following", middlewareLoggedIn(handlerFollowing));
   await runCommand(registry, passedArgs[0], ...passedArgs.slice(1));
   process.exit(0);
 }
