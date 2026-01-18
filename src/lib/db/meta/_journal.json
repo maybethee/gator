@@ -8,6 +8,13 @@
       "when": 1768492523192,
       "tag": "0000_minor_mimic",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1768658827325,
+      "tag": "0001_exotic_micromacro",
+      "breakpoints": true
     }
   ]
 }
