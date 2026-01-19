@@ -15,6 +15,13 @@
       "when": 1768658827325,
       "tag": "0001_exotic_micromacro",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768832769602,
+      "tag": "0002_classy_mystique",
+      "breakpoints": true
     }
   ]
 }
