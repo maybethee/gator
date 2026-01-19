@@ -1,5 +1,6 @@
+import { sql, eq } from "drizzle-orm";
 import { db } from "..";
-import { posts } from "../schema";
+import { feedFollows, feeds, posts, users } from "../schema";
 
 export type Post = typeof posts.$inferSelect;
 
@@ -22,4 +23,19 @@ export async function createPost(
     .onConflictDoNothing({ target: posts.url })
     .returning();
   return result;
+}
+
+export async function getPostsForUser(userName: string, limit: number) {
+  const [user] = await db.select().from(users).where(eq(users.name, userName));
+
+  const results = await db
+    .select()
+    .from(posts)
+    .innerJoin(feedFollows, eq(posts.feedId, feedFollows.feedId))
+    .innerJoin(feeds, eq(posts.feedId, feeds.id))
+    .where(eq(feedFollows.userId, user.id))
+    .orderBy(sql`${posts.publishedAt} desc`)
+    .limit(limit);
+
+  return results;
 }

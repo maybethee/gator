@@ -15,11 +15,18 @@ import {
 export async function handlerAddFeed(
   cmdName: string,
   user: User,
-  name: string,
-  url: string,
+  ...args: string[]
 ) {
+  if (args.length !== 2) {
+    console.error(`Addfeed command expects: ${cmdName} <feed_name> <url>`);
+    exit(1);
+  }
+
+  const feedName = args[0];
+  const url = args[1];
+
   try {
-    const feed = await createFeed(name, url, user.id);
+    const feed = await createFeed(feedName, url, user.id);
 
     const feedFollow = await createFeedFollow(user.id, feed.id);
     printFeedFollow(feedFollow.userName, feedFollow.feedName);
