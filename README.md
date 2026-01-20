@@ -1,5 +1,12 @@
 # gator
 
+## Features
+
+- Add RSS feeds from across the internet to be collected
+- Store the collected posts in a PostgreSQL database
+- Follow and unfollow RSS feeds that other users have added
+- View summaries of the aggregated posts in the terminal, with a link to the full post
+
 ## Installation
 
 ### Prerequisites
@@ -62,7 +69,6 @@ npm run start <command> <args>
 ## TODO
 
 - make it more pleasant to look at
-- combine follow and addfeed functionality, auto-adding a feed if it doesn't already exist
 - add sorting and filtering options to the browse command
 - add a TUI to view posts in CLI or redirect to browse
 
