@@ -16,7 +16,16 @@ export async function handlerBrowse(
   }
 
   const posts = await getPostsForUser(user.name, limit);
-  for (let i = 0; i < limit; i++) {
-    console.log(`${i + 1}: ${posts[i].feeds.name} - ${posts[i].posts.title}`);
+
+  console.log(`Found ${posts.length} posts for user ${user.name}`);
+  for (const post of posts) {
+    console.log(`${post.posts.publishedAt} from ${post.feeds.name}`);
+    console.log(`--- ${post.posts.title} ---`);
+    if (post.posts.description) {
+      console.log(`    ${post.posts.description.slice(0, 100)}...`);
+    }
+    console.log(`Link: ${post.posts.url}`);
+    console.log("======================================");
+    console.log();
   }
 }

@@ -13,7 +13,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "CLI RSS feed aggregator. This project is available under the MIT License.",
   "devDependencies": {
     "@types/node": "^25.0.6",
     "drizzle-kit": "^0.31.8",

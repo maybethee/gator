@@ -77,7 +77,7 @@ export async function handlerFollow(
   ...args: string[]
 ) {
   if (args.length === 0) {
-    console.error("follow handler expects url argument");
+    console.error(`follow command expects: ${cmdName} <url>`);
     exit(1);
   }
 
@@ -114,7 +114,7 @@ export async function handlerUnfollow(
   ...args: string[]
 ) {
   if (args.length === 0) {
-    console.error("follow handler expects url argument");
+    console.error(`unfollow command expects: ${cmdName} <url>`);
     exit(1);
   }
 

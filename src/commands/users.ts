@@ -9,7 +9,7 @@ import {
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length === 0) {
-    console.error("login handler expects username argument");
+    console.error(`login command expects: ${cmdName} <username>`);
     exit(1);
   }
   const userName = args[0];
@@ -28,7 +28,7 @@ export async function handlerLogin(cmdName: string, ...args: string[]) {
 
 export async function handlerRegister(cmdName: string, ...args: string[]) {
   if (args.length === 0) {
-    console.error("register handler expects username argument");
+    console.error(`register command expects: ${cmdName} <username>`);
     exit(1);
   }
 

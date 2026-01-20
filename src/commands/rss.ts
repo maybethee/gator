@@ -45,7 +45,7 @@ async function scrapeFeeds() {
 
 export async function handlerAgg(cmdName: string, ...args: string[]) {
   if (args.length === 0) {
-    console.error("aggregator expects a duration string");
+    console.error(`agg command expects: ${cmdName} <duration>`);
     return;
   }
 
