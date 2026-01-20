@@ -53,18 +53,20 @@ npm run start <command> <args>
 
 ### Available Commands
 
-- help (lists commands/usage info)
-- reset (resets database)
-- register (registers a new user)
-- login (logs in a registered user)
-- users (lists all users)
-- addfeed (adds a new feed to the database)
-- feeds (lists all feeds in the database)
-- follow (follows an existing feed in the database)
-- unfollow (unfollows a followed feed)
-- following (lists all feeds followed by logged in user)
-- agg (regularly saves posts from followed feeds)
-- browse (lists specified number of most recent posts from followed feeds)
+<pre>
+    help        |  lists commands/usage info
+    reset       |  resets database
+    register    |  registers a new user
+    login       |  logs in a registered user
+    users       |  lists all users
+    addfeed     |  adds a new feed to the database
+    feeds       |  lists all feeds in the database
+    follow      |  follows an existing feed in the database
+    unfollow    |  unfollows a followed feed
+    following   |  lists all feeds followed by logged in user
+    agg         |  regularly saves posts from followed feeds
+    browse      |  lists specified number of most recent posts from followed feeds
+</pre>
 
 ## TODO
 
